@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaguides.banking_app.dto.AccountDto;
+import com.javaguides.banking_app.dto.TransactionDto;
+import com.javaguides.banking_app.dto.TransferFundDTO;
 import com.javaguides.banking_app.service.AccountService;
 
 @RestController
@@ -79,5 +81,24 @@ public class AccountController {
 		return ResponseEntity.ok("account deleted successfully");
 		
 		
+	}
+	
+	
+	@PostMapping("/transfer")
+	public  ResponseEntity<String>  transferFund(@RequestBody TransferFundDTO tranferFundDto){
+		
+		accountService.transferFunds(tranferFundDto);
+		
+		return ResponseEntity.ok("fund transferredsuccessfully");
+		
+		
+	}
+	
+	@GetMapping("/{id}/transactions")
+	public ResponseEntity<List<TransactionDto>> fetchAccountTransactions(@PathVariable("id") Long accountId){
+		
+		List<TransactionDto> transactions = accountService.getAccountTransactions(accountId);
+		
+		return ResponseEntity.ok(transactions);
 	}
 }
